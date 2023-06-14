@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Seat Availability</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seat Availability</h1>
+  <h2>Train ID: <%= trainId %></h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Availability ID</th>
+        <th>Journey Date</th>
+        <th>SL Available</th>
+        <th>2S Available</th>
+        <th>3A Available</th>
+        <th>2A Available</th>
+        <th>1A Available</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% seats.forEach(function(seat) { %>
+        <tr>
+          <td><%= seat.availability_id %></td>
+          <td><%= seat.journey_date %></td>
+          <td><%= seat.sl_available %></td>
+          <td><%= seat['2s_available'] %></td>
+          <td><%= seat['3a_available'] %></td>
+          <td><%= seat['2a_available'] %></td>
+          <td><%= seat['1a_available'] %></td>
+          <td>
+            <a href="/book/<%= trainId %>?booking_date=<%= encodeURIComponent(seat.journey_date) %>">Book Now</a>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>

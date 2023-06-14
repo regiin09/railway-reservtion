@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking</title>
+</head>
+<body>
+  <h1>Booking</h1>
+  <h2>Train ID: <%= trainId %></h2>
+  <h2>Date: <%= booking_date %></h2>
+
+  <form action="/confirm-booking" method="POST">
+    <label for="booking_class">Class:</label>
+    <select name="booking_class" id="booking_class">
+      <option value="SL">Sleeper</option>
+      <option value="2S">Second Seating</option>
+      <option value="3A">AC 3 Tier</option>
+      <option value="2A">AC 2 Tier</option>
+      <option value="1A">AC First Class</option>
+    </select>
+
+    <label for="user_name">Name:</label>
+    <input type="text" name="user_name" id="user_name">
+
+    <label for="user_contact">Contact:</label>
+    <input type="text" name="user_contact" id="user_contact">
+
+    <label for="seat_number">Seat Number:</label>
+    <input type="text" name="seat_number" id="seat_number">
+
+    <input type="hidden" name="trainId" value="<%= trainId %>">
+    <input type="hidden" name="booking_date" value="<%= booking_date %>">
+
+    <button type="submit">Confirm Booking</button>
+  </form>
+</body>
+</html>

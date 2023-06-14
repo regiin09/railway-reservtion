@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Results</title>
+</head>
+<body>
+  <h1>Search Results</h1>
+
+  <div id="results"></div>
+
+  <form id="bookingForm">
+    <label for="trainId">Train ID:</label>
+    <input type="text" id="trainId" name="trainId" required>
+    <button type="submit">Book Ticket</button>
+  </form>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const station = urlParams.get('station');
+    const to_ = urlParams.get('to_');
+
+    // Display the search criteria
+    const searchCriteria = document.createElement('p');
+    searchCriteria.textContent = `Search Criteria: From ${station} to ${to_}`;
+    document.getElementById('results').appendChild(searchCriteria);
+
+    // Fetch the search results
+    fetch('/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ station, to_ }) // Convert payload to JSON string
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Display the results
+      const results = document.createElement('div');
+      results.innerHTML = JSON.stringify(data);
+      document.getElementById('results').appendChild(results);
+    })
+    .catch(error => {
+      console.error('Request error:', error);
+    });
+
+    // Handle booking form submission
+    document.getElementById('bookingForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form submission
+
+      const trainId = document.getElementById('trainId').value;
+
+      // Perform booking logic here with the selected train ID
+      // ...
+    });
+  </script>
+</body>
+</html>

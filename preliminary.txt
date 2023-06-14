@@ -1,0 +1,91 @@
+tables has been created using queries,
+totally 4 tables
+1.booking
+2.seatavailability
+3.cancellation
+4.train
+5. Vaigai_stops
+
+the code for creating those tables:
+
+CREATE TABLE Train (
+    train_id INT PRIMARY KEY,
+    train_name VARCHAR(255),
+    source VARCHAR(255),
+    destination VARCHAR(255),
+    departure_time TIME,
+    arrival_time TIME
+);
+
+CREATE TABLE `Seat_Availability` (
+    availability_id INT PRIMARY KEY AUTO_INCREMENT,
+    train_id INT,
+    journey_date DATE,
+    sl_available INT,
+    2s_available INT,
+    3a_available INT,
+    2a_available INT,
+    1a_available INT,
+    FOREIGN KEY (train_id) REFERENCES `Train` (train_id)
+);
+
+
+CREATE TABLE Booking (
+    booking_id INT PRIMARY KEY,
+    train_id INT,
+    class VARCHAR(10),
+    user_name VARCHAR(255),
+    user_contact VARCHAR(255),
+    seat_number INT,
+    booking_date DATE,
+    FOREIGN KEY (train_id) REFERENCES Train (train_id)
+);
+
+CREATE TABLE Cancellation (
+    cancellation_id INT PRIMARY KEY,
+    booking_id INT,
+    cancellation_date DATE,
+    FOREIGN KEY (booking_id) REFERENCES Booking (booking_id)
+);
+
+Then train details need not to be added after eash time when we initiate server these may create duplicate or may cause erros so we inserted train details perviously
+so we selected three trains:
+
+1.vaigai express
+
+inserting train details in database:
+
+INSERT INTO `railway_sys`.`train` (train_id, train_name, source, destination, departure_time, arrival_time)
+VALUES (12636, 'Vaigai Express', 'MDU', 'MS', '07:10:00', '13:55:00');
+
+Then we add stops in new tabe with time
+CREATE TABLE Vaigai_stops (
+    stop_no INT PRIMARY KEY,
+    station VARCHAR(225),
+    arrival TIME,
+    departure TIME,
+    train_id INT,
+    FOREIGN KEY (train_id) REFERENCES Train (train_id)
+);
+
+inserting values to Vaigai_stops:
+INSERT INTO `Vaigai_stops` (stop_no, station, arrival, departure, train_id)
+VALUES (1, 'MDU', '07:00:00', '07:10:00', 12636),
+       (2, 'SDN', '07:29:00', '07:30:00', 12636),
+       (3, 'DG', '08:03:00', '08:05:00', 12636),
+       (4, 'MPA', '08:44:00', '08:45:00', 12636),
+       (5, 'TPJ', '09:15:00', '09:20:00', 12636),
+       (6, 'ALU', '10:14:00', '10:15:00', 12636),
+       (7, 'VRI', '10:48:00', '10:50:00', 12636),
+       (8, 'VM', '11:40:00', '11:45:00', 12636),
+       (9, 'CGL', '13:03:00', '13:05:00', 12636),
+       (10, 'TBM', '13:33:00', '13:35:00', 12636),
+       (11, 'MBM', '13:53:00', '13:55:00', 12636),
+       (12, 'MS', '14:30:00', '14:31:00', 12636);
+
+inserting seat availability 
+INSERT INTO `Seat_Availability` (train_id, journey_date, sl_available, 2s_available, 3a_available, 2a_available, 1a_available)
+VALUES (12636, '2023-06-01', 100, 50, 30, 20, 10),
+       (12636, '2023-06-02', 100, 50, 30, 20, 10),
+       (12636, '2023-06-03', 100, 50, 30, 20, 10),
+       (12636, '2023-06-04', 100, 50, 30, 20, 10);

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Search Results</title>
+</head>
+<body>
+  <h1>Search Results</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Stop No</th>
+        <th>Station</th>
+        <th>Arrival Time</th>
+        <th>Departure Time</th>
+        <th>Train ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% results.forEach(function(stop) { %>
+        <tr>
+          <td><%= stop.stop_no %></td>
+          <td><%= stop.station %></td>
+          <td><%= stop.arrival %></td>
+          <td><%= stop.departure %></td>
+          <td><%= stop.train_id %></td>
+          <td><a href="/seat_availability/<%= stop.train_id %>?booking_date=<%= encodeURIComponent(booking_date) %>">Book Now</a></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>
